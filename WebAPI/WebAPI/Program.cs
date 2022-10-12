@@ -1,11 +1,19 @@
+using System.Reflection;
+using Application;
 using Infrastructure;
+using MediatR;
+using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.ConfigureApplication();
+builder.Services.ConfigureApi();
+builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -10,7 +10,7 @@ public class WishList : BaseEntity
     public string Description { get; set; }
     
     
-    public List<AppUser> User { get; set; }
-    public List<Wish> Wishes { get; set; }
+    public ICollection<AppUser> User { get; set; }
+    public ICollection<Wish> Wishes { get; set; }
     
 }

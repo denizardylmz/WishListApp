@@ -2,7 +2,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 namespace Domain.Identity;
 
-public class AppUser : IdentityUser<int>
+public class AppUser : IdentityUser
 {
-    public List<WishList> WishLists { get; set; }
+    public ICollection<WishList> WishLists { get; set; }
 }
