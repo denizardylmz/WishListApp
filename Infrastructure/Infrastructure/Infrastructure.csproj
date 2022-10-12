@@ -26,4 +26,10 @@
       <ProjectReference Include="..\..\Domain\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Authorization">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\6.0.9\Microsoft.AspNetCore.Authorization.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
