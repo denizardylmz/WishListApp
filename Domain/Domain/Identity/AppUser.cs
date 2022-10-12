@@ -4,5 +4,4 @@ namespace Domain.Identity;
 
 public class AppUser : IdentityUser
 {
-    public ICollection<WishList> WishLists { get; set; }
 }
