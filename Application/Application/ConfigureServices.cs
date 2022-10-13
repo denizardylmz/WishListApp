@@ -12,7 +12,9 @@ public static class ConfigureServices
 {
     public static IServiceCollection ConfigureApplication(this IServiceCollection provider)
     {
-        provider.AddScoped<IValidator<CreateWishListCommand>, CreateWishListValidator>();
+        //provider.AddScoped<IValidator<CreateWishListCommand>, CreateWishListValidator>();
+
+        provider.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         provider.AddMediatR(Assembly.GetExecutingAssembly());
         
         provider.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehavior<,>));

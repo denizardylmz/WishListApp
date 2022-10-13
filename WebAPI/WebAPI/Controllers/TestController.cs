@@ -20,11 +20,6 @@ namespace WebAPI.Controllers
             _mediator = mediator;
         }
         
-        [HttpPost("CreateWishList")]
-        public async Task<int> CreateWishList([FromBody] CreateWishListCommand request)
-        {
-            return await _mediator.Send(request);
-        }
         
     }
 }

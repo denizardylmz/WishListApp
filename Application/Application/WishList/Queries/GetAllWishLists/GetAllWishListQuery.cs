@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.WishList.Queries.GetAllWishLists;
 
-public class GetAllWishListRequest : IRequest<Response<Domain.Entities.WishList>>
+public class GetAllWishListRequest : IRequest<IResponse>
 {
 }
 
-public class GetAllWishListHandler : IRequestHandler<GetAllWishListRequest, Response>
+public class GetAllWishListHandler : IRequestHandler<GetAllWishListRequest, IResponse>
 {
     private readonly IAppDbContext _context;
 
@@ -19,10 +19,10 @@ public class GetAllWishListHandler : IRequestHandler<GetAllWishListRequest, Resp
         _context = context;
     }
 
-    public async Task<Response> Handle(GetAllWishListRequest request, CancellationToken cancellationToken)
+    public async Task<IResponse> Handle(GetAllWishListRequest request, CancellationToken cancellationToken)
     {
-        var wishLists = await _context.WishLists.ToListAsync();
+        var wishLists = await _context.WishLists.ToListAsync(cancellationToken);
 
-        return Response<List<Domain.Entities.WishList>>.Success(wishLists, "Success");
+        return Response<List<Domain.Entities.WishList>>.Success("Success", wishLists);
     }
 }
