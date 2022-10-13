@@ -1,6 +1,8 @@
+using Application.Interfaces;
+
 namespace Application.Common.Response;
 
-public class Response<T> : Response
+public class Response<T> : Response , IResponse<T>
 {
     public T Data { get; set; }
 
@@ -9,8 +11,8 @@ public class Response<T> : Response
         Data = data;
     }
     
-    public static Response<T> Success(T data, string message)
+    public static Response<T> Success(string message, T data)
     {
-        return new Response<T>(data, message, true, null);
+        return new Response<T>(data, message, true, Array.Empty<string>() );
     }
 }

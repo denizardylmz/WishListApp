@@ -1,3 +1,4 @@
+using Application.Common.Response;
 using Application.Interfaces;
 using Application.WishList.Commands.CreateWishList;
 using Domain.Entities;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.WishList.Commands.Handlers;
 
-public class CreateWishListHandler : IRequestHandler<CreateWishListCommand, int>
+public class CreateWishListHandler : IRequestHandler<CreateWishListCommand, IResponse>
 {
     private IAppDbContext _context;
 
@@ -16,7 +17,7 @@ public class CreateWishListHandler : IRequestHandler<CreateWishListCommand, int>
         _context = context;
     }
     
-    public async Task<int> Handle(CreateWishListCommand request, CancellationToken cancellationToken)
+    public async Task<IResponse> Handle(CreateWishListCommand request, CancellationToken cancellationToken)
     {
         var entity = new Domain.Entities.WishList
         {
@@ -24,6 +25,12 @@ public class CreateWishListHandler : IRequestHandler<CreateWishListCommand, int>
             Description = request.Description
         };
         await _context.WishLists.AddAsync(entity, cancellationToken);
-        return await _context.SaveChangesAsync(cancellationToken);
+        var res = await _context.SaveChangesAsync(cancellationToken);
+        if (res > 0)
+        {
+            return Response<int>.Success("WishList Created", entity.Id);
+        }
+
+        return Response.ErrorResponse("WishList Not Created", null);
     }
 }
