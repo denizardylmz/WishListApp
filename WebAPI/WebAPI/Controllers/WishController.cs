@@ -8,6 +8,7 @@ using Application.Wish.Commands.DeleteWishCommand;
 using Application.Wish.Commands.UpdateWishCommand;
 using Application.Wish.Queries.GetAllWishesQuery;
 using Application.Wish.Queries.GetWishById;
+using Application.Wish.Queries.GetWishByPagination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,13 @@ namespace WebAPI.Controllers
         //Get Wish By Id
         [HttpPost("GetWishById")]
         public Task<IResponse> GetById(GetWishByIdRequest request)
+        {
+            return _mediator.Send(request);
+        }
+
+        //Get Wish By Pagination
+        [HttpPost("GetWishByPagination")]
+        public Task<IResponse> GetWishWithPagination(GetWishByPaginationRequest request)
         {
             return _mediator.Send(request);
         }
