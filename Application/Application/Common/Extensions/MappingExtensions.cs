@@ -9,8 +9,8 @@ public static class QueryableExtensions
     public static Task<PaginationList<TDestination>> PaginationListAsync<TDestination>(
         this IQueryable<TDestination> queryable,
         int pageNumber,
-        int pageSize) where TDestination : class
+        int pageSize, CancellationToken cancellationToken = default) where TDestination : class
     {
-        return PaginationList<TDestination>.Create(queryable.AsNoTracking(), pageNumber, pageSize);
+        return PaginationList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageNumber, pageSize, cancellationToken);
     }
 }

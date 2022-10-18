@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Application.Common.Models;
 
 public class PaginationList<T>
@@ -19,12 +21,12 @@ public class PaginationList<T>
 
     public bool HasNext => PageNumber < TotalPages;
     
-    public static Task<PaginationList<T>> Create(IQueryable<T> source, int pageNumber, int pageSize)
+    public static async Task<PaginationList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
     {
         var count = source.Count();
-        var data = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        var data = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
         
-        return Task.FromResult(new PaginationList<T>(data, count, pageNumber, pageSize));
+        return new PaginationList<T>(data, count, pageNumber, pageSize);
     }
 
 }
