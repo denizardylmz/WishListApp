@@ -32,14 +32,12 @@ public class CreateWishCommandHandler : IRequestHandler<CreateWishCommand, IResp
 
             WishListId = request.WishListId
         };
-
-        var entityEntry = await _context.Wishes.AddAsync(entity, cancellationToken);
-        var result = await _context.SaveChangesAsync(cancellationToken);
-        if (result > 0)
-        {
-            return Response<Domain.Entities.Wish>.Success("Wish created successfully", entityEntry.Entity);    
-        }
-        return Response.ErrorResponse("Wish creation failed", Array.Empty<string>());
         
+        var entityEntry = _context.Wishes.Add(entity);
+        
+        var result = await _context.SaveChangesAsync(cancellationToken);
+
+        return result > 0 ? Response<int>.Success("Wish created successfully", result) :
+            Response.ErrorResponse("Wish creation failed", Array.Empty<string>());
     }
 }
