@@ -11,6 +11,10 @@ public class GetWishByPaginationRequest : IRequest<IResponse>
     public int ListId { get; set; }
     public int PageSize { get; set; }
     public int PageNumber { get; set; }
+
+
+    //For progress testing
+    //public IProgress<string>? Progress { get; set; }
 }
 public class GetWishByPaginationHandler : IRequestHandler<GetWishByPaginationRequest, IResponse>
 {
@@ -23,13 +27,15 @@ public class GetWishByPaginationHandler : IRequestHandler<GetWishByPaginationReq
 
     public async Task<IResponse> Handle(GetWishByPaginationRequest request, CancellationToken cancellationToken)
     {
-
         var queryable = _context.Wishes.AsQueryable(); 
         var data = await queryable.Where(p => p.WishListId == request.ListId)
-            .PaginationListAsync(request.PageNumber, request.PageSize);
-        
+            .PaginationListAsync(request.PageNumber, request.PageSize, cancellationToken);
+
         if(!data.Data.Any())
             return Response.NotFoundResponse("Wish not found");
+        
+        //For progress test
+        //request.Progress.Report("Your wishes are ready");
         
         return Response<PaginationList<Domain.Entities.Wish>>.Success("Wishes found", data);
     }

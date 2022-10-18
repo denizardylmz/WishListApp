@@ -63,9 +63,13 @@ namespace WebAPI.Controllers
 
         //Get Wish By Pagination
         [HttpPost("GetWishByPagination")]
-        public Task<IResponse> GetWishWithPagination(GetWishByPaginationRequest request)
+        public Task<IResponse> GetWishWithPagination(GetWishByPaginationRequest request, CancellationToken cancellationToken)
         {
-            return _mediator.Send(request);
+            // Progress<string> progress = new Progress<string>();
+            // progress.ProgressChanged += (sender, e) => Console.WriteLine(e);
+            // request.Progress = progress;
+            
+            return _mediator.Send(request, cancellationToken);
         }
     }
 }
